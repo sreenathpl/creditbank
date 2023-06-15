@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+  {% block body %}
+    <div class="main-block">
+      <h1>User Registration</h1>
+      <form action="reglogin" method="post">
+        {% csrf_token %}
+        <hr>
+        <label id="icon" for="name"><i class="fas fa-envelope"></i></label>
+        <input type="text" name="username" id="name" placeholder="username" required/>
+        <label id="icon" for="name"><i class="fas fa-user"></i></label>
+        <input type="password" name="password" id="name" placeholder="password" required/>
+        <label id="icon" for="name"><i class="fas fa-unlock-alt"></i></label>
+        <input type="password" name="conf_password" id="name" placeholder="Confirm Password" required/>
+        <hr>
+        <div class="btn-block">
+          <button type="submit" href="/">Submit</button>
+        </div>
+      </form>
+
+      <small style="color:red;">
+      {% for msg in messages %}
+      {{msg}}
+      {% endfor %}
+      </small>
+    </div>
+  {% endblock %}
+</html>
+
+

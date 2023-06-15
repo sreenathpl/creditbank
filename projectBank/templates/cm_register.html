@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+{% block body %}
+<form action="/cm_register" method="post">
+ {% csrf_token %}
+      <script>
+function ageCount() {
+    var now =new Date();                            //getting current date
+    var currentY= now.getFullYear();                //extracting year from the date
+    var currentM= now.getMonth();                   //extracting month from the date
+
+    var dobget =document.getElementById("dob").value; //getting user input
+    var dob= new Date(dobget);                             //formatting input as date
+    var prevY= dob.getFullYear();                          //extracting year from input date
+    var prevM= dob.getMonth();                             //extracting month from input date
+
+    var ageY =currentY - prevY;
+    var ageM =Math.abs(currentM- prevM);          //converting any negative value to positive
+
+    document.getElementById('age').innerHTML = ageY +' years ' + ageM +' months';
+    }
+    </script>
+  <table style="margin-left: auto; margin-right:auto;">
+    <tr>
+        <td><label>Name :</label></td>
+        <td><input type="text" name = "name"></td>
+    </tr>
+    <tr>
+        <td><label>DOB :</label></td>
+        <td><input type="date" name = "dob" id="dob" onchange="ageCount()"></td>
+    </tr>
+    <tr>
+        <td><label>Age :</label></td>
+        <td><label id = "age"></label></td>
+    </tr>
+    <tr>
+        <td><label>Gender :</label></td>
+        <td>
+            <input type="radio" id="male" name="age" value="male">
+            <label for="male">Male</label>
+
+            <input type="radio" id="female" name="age" value="female">
+            <label for="female">Female</label>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="phone">Phone number:</label></td>
+        <td><input type="tel" id="phone" name="phone" pattern="[0-9]{10}"></td>
+    </tr>
+    <tr>
+        <td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" name="email"></td>
+    </tr>
+    <tr>
+        <td><label for="address">Address:</label></td>
+        <td><textarea rows = "3" cols = "21" name = "address" id = "address"> </textarea></td>
+    </tr>
+    <tr>
+        <td><label for="district">District:</label></td>
+        <td>
+          <select id="district" onchange="configureDropDownLists(this,document.getElementById('branch'))">
+          <option value=""></option>
+          <option value="Thiruvanathapuram">Thiruvanathapuram</option>
+          <option value="Kottayam">Kottayam</option>
+          <option value="Kochi">Kochi</option>
+          <option value="Thrissur">Thrissur</option>
+          <option value="Kozhikode">Kozhikode</option>
+          </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="branch">Branch:</label></td>
+        <td>
+            <select id ="branch">
+                <option value="" selected="selected">Select branch</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="actype">Account Type:</label></td>
+        <td>
+          <select id="actype" naame ="actype">
+          <option value="sb">Savings Account</option>
+          <option value="ca">Current Account</option>
+          <option value="od">Over Draft Account</option>
+          </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label>Materials provided:</label></td>
+        <td>
+            <input type="checkbox" id="debit_card" name="debit_card" value="debit_card">
+            <label for="debit_card">Debit Card</label>
+            <input type="checkbox" id="credit_card" name="credit_card" value="credit_card">
+            <label for="credit_card">Credit Card</label>
+            <input type="checkbox" id="cheque" name="cheque" value="cheque">
+            <label for="cheque">Cheque Book</label>
+        </td>
+    </tr><br><br>
+    <tr>
+        <td><br>
+            <button type="submit">Submit</button>
+        </td>
+        <td><br>
+            <a href="/user_logout">
+                <button type="button">Logout</button>
+            </a>
+        </td>
+    </tr>
+  </table>
+
+    <script>
+      function configureDropDownLists(ddl1,ddl2) {
+    var thiruvanathapuram = ["Chirayinkeezhu", "Thiruvananthapuram","Neyyattinkara","Varkala"];
+    var kottayam = ["Changanassery", "Pala", "Erattupetta", "Kottayam"];
+    var kochi = ['Edapally', 'Kalamassery', 'Aluva', 'Tripunithura'];
+    var thrissur = ['Irinjalakuda', 'Kodungallur', 'Chalakudy', 'Guruvayur'];
+    var kozhikode = ['Kozhikode', 'Koyilandy', 'Feroke', 'Ramanattukara'];
+
+    switch (ddl1.value) {
+        case 'Thiruvanathapuram':
+            ddl2.options.length = 0;
+            for (i = 0; i < thiruvanathapuram.length; i++) {
+                createOption(ddl2, thiruvanathapuram[i], thiruvanathapuram[i]);
+            }
+            break;
+        case 'Kottayam':
+            ddl2.options.length = 0;
+        for (i = 0; i < kottayam.length; i++) {
+            createOption(ddl2, kottayam[i], kottayam[i]);
+            }
+            break;
+        case 'Kochi':
+            ddl2.options.length = 0;
+            for (i = 0; i < kochi.length; i++) {
+                createOption(ddl2, kochi[i], kochi[i]);
+            }
+            break;
+        case 'Thrissur':
+            ddl2.options.length = 0;
+            for (i = 0; i < thrissur.length; i++) {
+                createOption(ddl2, thrissur[i], thrissur[i]);
+            }
+            break;
+        case 'Kozhikode':
+            ddl2.options.length = 0;
+            for (i = 0; i < kozhikode.length; i++) {
+                createOption(ddl2, kozhikode[i], kozhikode[i]);
+            }
+            break;
+            default:
+                ddl2.options.length = 0;
+            break;
+    }
+
+}
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
+    }
+
+    </script>
+</form>
+
+<center>
+<small style="color:red;">
+{% for msg in messages %}
+{{msg}}
+Go to <a href="/">HOME</a>
+{% endfor %}
+</small>
+</center>
+{% endblock %}
+</html>
